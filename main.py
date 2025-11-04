@@ -28,7 +28,7 @@ if __name__== "__main__":
     best_xgb_model, y_pred_xgb, y_proba_xgb = xgboost_model(X_train, X_test, y_train, y_test)
 
     #lightgbm
-    #best_lgbm_model, y_pred_lgb, y_proba_lgb = lgbm_model(X_train, X_test, y_train, y_test)
+    best_lgbm_model, y_pred_lgb, y_proba_lgb = lgbm_model(X_train, X_test, y_train, y_test)
 
     #catboost
     #best_cat_model, y_pred_cat, y_proba_cat = catboost_model(X_train, X_test, y_train, y_test)

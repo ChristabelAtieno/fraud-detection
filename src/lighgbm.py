@@ -87,7 +87,7 @@ def lgbm_model(X_train, X_test, y_train, y_test):
 
          #===log and register the model
         mlflow.xgboost.log_model(
-                                lightgbm_model= best_lgbm,
+                                best_lgbm,
                                 artifact_path="lightgbm-model",
                                 registered_model_name="fraud-detection-lightgbm")
         

@@ -84,7 +84,7 @@ def xgboost_model(X_train, X_test, y_train, y_test):
         
         #===log and register the model
         mlflow.xgboost.log_model(
-                                xgb_model = best_xgb_model, 
+                                best_xgb_model, 
                                   artifact_path="xgboost-model",
                                   registered_model_name="fraud-detection-xgboost")
         
