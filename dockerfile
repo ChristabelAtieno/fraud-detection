@@ -2,9 +2,18 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
-COPY . /app
+# Install system dependencies for LightGBM, XGBoost, CatBoost
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends build-essential gcc && \
+    rm -rf /var/lib/apt/lists/*
 
-# cache dir to reduce image size
-RUN pip install --no-cache-dir -r requirements.txt 
+# Copy only requirements first to leverage Docker caching
+COPY requirements.txt .
 
-CMD ["python", "-u" "main.py" ]
+# Upgrade pip and increase timeout for heavy installs
+RUN pip install --upgrade pip && \
+    pip install --default-timeout=1000 --no-cache-dir -r requirements.txt
+
+COPY . .
+
+CMD ["python", "-u", "main.py"]

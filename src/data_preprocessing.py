@@ -1,3 +1,4 @@
+import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 
@@ -71,6 +72,27 @@ def preprocess_data(train_df, test_df):
         freq = train_df['P_emaildomain'].value_counts(normalize=True)
         train_df['P_emaildomain'] = train_df['P_emaildomain'].map(freq)
         test_df['P_emaildomain'] = test_df['P_emaildomain'].map(freq).fillna(0)
+
+    # Aggregate behaviour per card1 
+    card1_agg = train_df.groupby('card1').agg({
+        'TransactionAmt': ['mean', 'std', 'count'],
+        'isFraud': ['mean']
+    }).reset_index()
+
+    card1_agg.columns = ['card1', 'card1_amt_mean', 'card1_amt_std', 'card1_txn_count', 'card1_fraud_rate']
+
+    # Merge back to train and test
+    train_df= train_df.merge(card1_agg, on='card1', how='left')
+    test_df = test_df.merge(card1_agg, on='card1', how='left')
+
+    # Drop the raw card1
+    train_df.drop('card1', axis=1, inplace=True)
+    test_df.drop('card1', axis=1, inplace=True)
+
+    train_df = pd.get_dummies(train_df, columns=['card4', 'card6'], drop_first=True)
+
+    col_drop = ['card4_mastercard', 'card4_missing', 'card4_visa','card6_debit','card6_debit or credit', 'card6_missing']
+    train_df = train_df.drop(columns=col_drop)
 
     # Label Encoding for Other Categorical Columns ---
     for col in [c for c in cate_features if c != 'P_emaildomain']:
