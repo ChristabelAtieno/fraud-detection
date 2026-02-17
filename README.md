@@ -8,9 +8,11 @@ This project addresses the critical challenge of financial fraud by analyzing la
 ### Technical Pipeline
 
 1. Data Integration
+
 Table Merging: Joins Transaction and Identity datasets using specific keys to create a unified view.
  
 2. Preprocessing & Feature Engineering
+
 Automated Pipeline: Imputes missing values, encodes categorical variables, and normalizes numeric fields.
 Correlated Features: Identified and kept the features with the high correlation to fraud.
 Aggregation: Creates "group-by" features (e.g., mean transaction amount per card) to capture behavioral anomalies.
