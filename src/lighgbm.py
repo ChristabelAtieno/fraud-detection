@@ -3,7 +3,10 @@ import mlflow.lightgbm
 import pandas as pd
 from lightgbm import LGBMClassifier
 from sklearn.model_selection import RandomizedSearchCV
-from sklearn.metrics import classification_report, average_precision_score, roc_auc_score,accuracy_score, precision_score, recall_score
+from sklearn.metrics import (classification_report, 
+                            average_precision_score, 
+                            roc_auc_score,accuracy_score, 
+                            precision_score, recall_score)
 
 def lgbm_model(X_train, X_test, y_train, y_test):
 
